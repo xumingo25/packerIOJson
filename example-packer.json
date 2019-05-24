@@ -1,0 +1,31 @@
+{
+        "_comment": "install product <XXXXXXXXX>",
+        "builders": [
+                {
+                        "type": "amazon-ebs",
+                        "ami_name": "TBK-AM-{{timestamp}}",
+                        "ssh_username": "ec2-user",
+                        "vpc_id": "xxxxxxxxxxxxxxxx",
+                        "subnet_id": "xxxxxxxxxxxxxxx",
+                        "instance_type": "t2.micro",
+                        "region": "us-east-1",
+                        "source_ami": "ami-0de53d8956e8dcf80",
+                        "ami_description": "IMAGEN TBK BASADA EN AMAZON LINUX X64",
+                        "tags": {
+                                "Name": "TBK-AM-{{timestamp}}"
+                        }
+                }
+        ],
+        "provisioners": [
+                {
+                        "type": "shell",
+                        "inline": [
+								"sleep 15",
+                                "sudo sh -c 'echo \"Usted está entrando a un sistema privado. Toda su actividad será registrada para efectos de control.\" > /etc/issue'",
+                                "sudo sh -c 'echo \"Banner /etc/issue\" >> /etc/ssh/sshd_config'",
+                                "sudo sh -c 'echo \"\nBienvenido al sistema #SYSTEM#.\n\n\" >> /etc/motd'",
+                                "sudo yum remove tcpdump -y"
+                        ]
+                }
+				]
+}
